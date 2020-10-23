@@ -213,19 +213,31 @@ Controller::Segment Controller::getNewHead() const
     return newHead;
 }
 
+
 void Controller::receive(std::unique_ptr<Event> e)
 {
     try {
-        handleTimePassed(*dynamic_cast<EventT<TimeoutInd> const&>(*e));
+        auto a = e->getMessageId;
+        handleTimePassed(a);
+        
+        //handleTimePassed(*dynamic_cast<EventT<TimeoutInd> const&>(*e));
     } catch (std::bad_cast&) {
         try {
-            handleDirectionChange(*dynamic_cast<EventT<DirectionInd> const&>(*e));
+            auto a = e->getMessageId;
+            handleDirectionChange(a);
+            //handleDirectionChange(*dynamic_cast<EventT<DirectionInd> const&>(*e));
         } catch (std::bad_cast&) {
             try {
-                handleFoodPositionChange(*dynamic_cast<EventT<FoodInd> const&>(*e));
+                auto a = e->getMessageId;
+                handleFoodPositionChange(a);
+                
+                //handleFoodPositionChange(*dynamic_cast<EventT<FoodInd> const&>(*e));
             } catch (std::bad_cast&) {
                 try {
-                    handleNewFood(*dynamic_cast<EventT<FoodResp> const&>(*e));
+                    auto a = e->getMessageId;
+                    handleNewFood(a);
+                    //FoodResp::MESSAGE_ID:
+                    //handleNewFood(*dynamic_cast<EventT<FoodResp> const&>(*e));
                 } catch (std::bad_cast&) {
                     throw UnexpectedEventException();
                 }
